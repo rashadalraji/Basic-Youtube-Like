@@ -1,13 +1,13 @@
 <div class="row" *ngIf="isVideoClicked">
   <div class="col-md-2 p-3">
-    <button class="btn-default btn-lg shadow" (click)="onClickHomeBtn()" style="border-radius:5px !important">
+    <button class="btn-default btn-lg shadow common_border_radius" (click)="onClickHomeBtn()">
       <i class="fa fa-home"></i>
     </button>
   </div>
 </div>
   <div class="row">
     <div [ngClass]="{'col-12' : !isVideoClicked , 'col-8' :isVideoClicked }">
-      <div class="card" style="overflow:hidden; padding: 3px;">
+      <div class="card overflow_hide" style="padding: 3px;">
         <div class="shadow min-vh-100 py-4">
 
           <div class="row" *ngIf="!isVideoClicked">
@@ -25,7 +25,7 @@
             </div>
           </div>
           <div class="row" *ngIf="isVideoAvailable">
-            <div class="shadow py-4 mr-1" [ngClass]="{'col-4' : !isVideoClicked , 'col-12' :isVideoClicked }" style="overflow:hidden !important"
+            <div class="shadow py-4 mr-1 overflow_hide" [ngClass]="{'col-4' : !isVideoClicked , 'col-12' :isVideoClicked }"
               *ngFor="let video of videoList">
               <video (click)="onClickVideoInfo(video.id)" controls class="cursor_pointer" (canplay)="pauseVideo(videoplayer)"
                 [ngClass]="{'video_player': !isVideoClicked, 'extended_video_player' : isVideoClicked}" #videoPlayer
@@ -58,9 +58,9 @@
     </div>
     <div class="col-4" *ngIf="isVideoClicked">
       <div class="card">
-        <div class="shadow min-vh-100 py-4">
-          <div class="col-1"></div>
-          <div class="row" *ngIf="isVideoClicked">
+         
+        <div class="shadow min-vh-100 py-4">         
+          <div class="row">
             <div class="col-md-10 mx-auto mb-2">
               <div class="input-group">
                 <input class="form-control border-end-0 border rounded-pill" type="search" placeholder="search" id="example-search-input"
@@ -74,6 +74,12 @@
               </div>
             </div>
           </div>
+          <div class="row" *ngIf="isSmallVideoAvailable">
+            <div class="col-md-6 mx-auto mb-2 mt-3">
+              <h4 class="text-center title_color"> Recommended For You</h4>
+              <hr>
+            </div>
+            </div>
           <div class="row cursor_pointer" *ngFor="let video of suggestionList">
 
             <div class="col-7 p-3">

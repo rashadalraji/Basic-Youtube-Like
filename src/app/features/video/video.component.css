@@ -29,3 +29,11 @@
 .cursor_pointer{
     cursor: pointer;
 }
+
+.common_border_radius{
+    border-radius:5px !important
+}
+
+.title_color{
+    color: darkslategray
+}
