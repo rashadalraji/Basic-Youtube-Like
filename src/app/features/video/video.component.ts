@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
+
+
 
 @Component({
   selector: 'app-video',
@@ -22,5 +24,30 @@ export class VideoComponent implements OnInit {
       }
     })
   }
+
+  @ViewChild('videoPlayer') videoplayer: any;
+public startedPlay:boolean = false;
+public show:boolean = false;
+pauseVideo(videoplayer:any)
+{
+  videoplayer.nativeElement.play();
+  // this.startedPlay = true;
+  // if(this.startedPlay == true)
+  // {
+     setTimeout(() => 
+     {
+      videoplayer.nativeElement.pause();
+       if(videoplayer.nativeElement.paused)
+      {
+        this.show = !this.show;       
+      } 
+     }, 5000);
+  // }
+}
+
+closebutton(videoplayer:any){
+  this.show = !this.show; 
+  videoplayer.nativeElement.play();
+}
 
 }

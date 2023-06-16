@@ -1,13 +1,40 @@
 <div class="row">
     <div class="card">
         <div class="row">
-        <div class="col-md-3" *ngFor="let video of videoList">
-            {{video?.title}} <br>
-            {{video?.videoUrl}} <br>
-            {{video?.thumbnailUrl}} <br>
-
+            <div class="input-group">
+                <div class="form-outline">
+                  <input id="search-input" type="search" id="form1" class="form-control" />
+                  <label class="form-label" for="form1">Search</label>
+                </div>
+                <button id="search-button" type="button" class="btn btn-primary">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+        <div class="col-md-4" style="overflow:hidden !important" *ngFor="let video of videoList">         
+               
+            
+            <video  controls (canplay)="pauseVideo(videoplayer)" class="video_player"
+            #videoPlayer poster=
+            "{{video?.thumbnailUrl}}">
+          <source src="{{video?.videoUrl}}" type="video/mp4">
+          Your browser does not support the video tag.
+          </video> <br>
+          <b>{{video?.title}}   </b> <br>
+          {{video?.views}} views    <br>
+          {{video?.author}} <br>
+          {{video?.subscriber}} <br>
             <hr>
         </div>
         </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="cow">
+      <!-- <video  controls (canplay)="pauseVideo(videoplayer)"
+      #videoPlayer>
+    <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+    </video> -->
     </div>
 </div>
