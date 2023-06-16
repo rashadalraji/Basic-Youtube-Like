@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -21,7 +21,7 @@ import { VideoComponent } from './features/video/video.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-  
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

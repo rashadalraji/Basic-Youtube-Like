@@ -1,40 +1,42 @@
-<div class="row">
-    <div class="card">
-        <div class="row">
-            <div class="input-group">
-                <div class="form-outline">
-                  <input id="search-input" type="search" id="form1" class="form-control" />
-                  <label class="form-label" for="form1">Search</label>
-                </div>
-                <button id="search-button" type="button" class="btn btn-primary">
-                  <i class="fas fa-search"></i>
-                </button>
-              </div>
-        <div class="col-md-4" style="overflow:hidden !important" *ngFor="let video of videoList">         
-               
-            
-            <video  controls (canplay)="pauseVideo(videoplayer)" class="video_player"
-            #videoPlayer poster=
-            "{{video?.thumbnailUrl}}">
+
+<div class="card mt-5">
+  <div class="container shadow min-vh-100 py-4">
+    <div class="row">
+      <div class="col-md-5 mx-auto mb-4">
+        <div class="input-group">
+          <input class="form-control border-end-0 border rounded-pill" 
+          type="search"
+          placeholder="search" 
+          id="example-search-input" 
+          name="search" 
+          [(ngModel)] = "search"
+          (keyup)="onClickSearchBtn()">
+          <span class="input-group-append">
+            <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="button" (click) = "onClickSearchBtn()">
+              <i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 shadow py-4 mr-1" style="overflow:hidden !important" *ngFor="let video of videoList">
+
+        <video controls (canplay)="pauseVideo(videoplayer)" class="video_player" #videoPlayer poster="{{video?.thumbnailUrl}}">
           <source src="{{video?.videoUrl}}" type="video/mp4">
           Your browser does not support the video tag.
-          </video> <br>
-          <b>{{video?.title}}   </b> <br>
-          {{video?.views}} views    <br>
+        </video> <br>
+        <b>{{video?.title}} </b> <br>
+        <div class="small fw-light">
+          {{video?.views}} views <br>
           {{video?.author}} <br>
           {{video?.subscriber}} <br>
-            <hr>
         </div>
-        </div>
-    </div>
-</div>
 
-<div class="container">
-    <div class="cow">
-      <!-- <video  controls (canplay)="pauseVideo(videoplayer)"
-      #videoPlayer>
-    <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-    </video> -->
+
+
+        
+      </div>
     </div>
+  </div>
 </div>
