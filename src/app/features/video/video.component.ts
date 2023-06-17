@@ -18,6 +18,7 @@ export class VideoComponent implements OnInit {
   isSmallVideoAvailable: boolean = false;
   isVideoClicked: boolean = false;
   isSmallVideoClicked: boolean = false;
+  clickCount = 0;
   search: any = '';
 
   constructor(private commonService: CommonService) { }
@@ -29,6 +30,7 @@ export class VideoComponent implements OnInit {
 
   // fetch data from API
   getVideList() {
+    this.clickCount = 0;
     this.commonService.getVideoList().subscribe((res: any) => {
       if (res) {
         this.videoList = res;
@@ -109,8 +111,12 @@ export class VideoComponent implements OnInit {
 
   // Master video click function
   onClickVideoInfo(id: string) {
-    this.isVideoClicked = true;
-    this.isSmallVideoClicked = false;
+   if(this.isVideoClicked){
+     return;
+   }
+    this.isVideoClicked = true;  
+    this.isSmallVideoClicked = false;   
+    
     this.generateRandomSuggestionList();
     let index = this.suggestionList.findIndex((el: any) => el.id == id);
     let masterIndex = this.videoList.findIndex((el: any) => el.id == id);
@@ -121,6 +127,8 @@ export class VideoComponent implements OnInit {
       this.videoList = this.videoList.slice(masterIndex, masterIndex + 1);
 
     }
+
+    this.clickCount = 1;
 
   }
 
@@ -142,6 +150,9 @@ export class VideoComponent implements OnInit {
 
   // Generating rando video ass suggestion for user
   generateRandomSuggestionList() {
+    // if(this.clickCount > 0){
+    //   return;
+    // }
     let randomList: any = [];
     let totalVideoCount = this.videoListBackUp.length;
     for (var i = 0; i < 5; i++) {
