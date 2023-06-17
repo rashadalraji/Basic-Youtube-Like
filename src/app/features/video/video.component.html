@@ -5,108 +5,108 @@
     </button>
   </div>
 </div>
-  <div class="row">
-    <div [ngClass]="{'col-12' : !isVideoClicked , 'col-8' :isVideoClicked }">
-      <div class="card overflow_hide" style="padding: 3px;">
-        <div class="shadow min-vh-100 py-4">
+<div class="row">
+  <div [ngClass]="{'col-12' : !isVideoClicked , 'col-8' :isVideoClicked }">
+    <div class="card overflow_hide" style="padding: 3px;">
+      <div class="shadow min-vh-100 py-4">
 
-          <div class="row" *ngIf="!isVideoClicked">
-            <div class="col-md-5 mx-auto mb-4">
-              <div class="input-group">
-                <input class="form-control border-end-0 border rounded-pill" type="search" placeholder="search" id="example-search-input"
-                  name="search" [(ngModel)]="search" (input)="onClickSearchBtn('videoList')">
-                <span class="input-group-append">
-                  <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="button"
-                    (click)="onClickSearchBtn('videoList')">
-                    <i class="fa fa-search"></i>
-                  </button>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="row" *ngIf="isVideoAvailable">
-            <div class="shadow py-4 mr-1 overflow_hide" [ngClass]="{'col-4' : !isVideoClicked , 'col-12' :isVideoClicked }"
-              *ngFor="let video of videoList">
-              <video (click)="onClickVideoInfo(video.id)" controls class="cursor_pointer" (canplay)="pauseVideo(videoplayer)"
-                [ngClass]="{'video_player': !isVideoClicked, 'extended_video_player' : isVideoClicked}" #videoPlayer
-                poster="{{video?.thumbnailUrl}}">
-                <source src="{{video?.videoUrl}}" type="video/mp4">
-                Your browser does not support the video tag.
-              </video> <br>
-              <div class="cursor_pointer p-3" (click)="onClickVideoInfo(video.id)">
-                <b>{{video?.title}} </b> <br>
-                <div class="small fw-light">
-                  {{video?.views}} views <br>
-                  {{video?.author}} <br>
-                  {{video?.subscriber}} <br>
-                </div>
-              </div>
-              <div class="card py-4 p-3" *ngIf="isVideoClicked">
-                <p>{{video?.description}}</p>
-              </div>
-            </div>
-
-
-          </div>
-          <div class="row" *ngIf="!isVideoAvailable">
-            <div class="col-md-12 no_video_found">
-              <h4 class="text-center m-4">No Video Found !!</h4>
+        <div class="row" *ngIf="!isVideoClicked">
+          <div class="col-md-5 mx-auto mb-4">
+            <div class="input-group">
+              <input class="form-control border-end-0 border rounded-pill" type="search" placeholder="search" id="example-search-input"
+                name="search" [(ngModel)]="search" (input)="onClickSearchBtn('videoList')">
+              <span class="input-group-append">
+                <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="button"
+                  (click)="onClickSearchBtn('videoList')">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col-4" *ngIf="isVideoClicked">
-      <div class="card">
-         
-        <div class="shadow min-vh-100 py-4">         
-          <div class="row">
-            <div class="col-md-10 mx-auto mb-2">
-              <div class="input-group">
-                <input class="form-control border-end-0 border rounded-pill" type="search" placeholder="search" id="example-search-input"
-                  name="search" [(ngModel)]="search" (input)="onClickSearchBtn('suggestionList')">
-                <span class="input-group-append">
-                  <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="button"
-                    (click)="onClickSearchBtn('suggestionList')">
-                    <i class="fa fa-search"></i>
-                  </button>
-                </span>
+        <div class="row" *ngIf="isVideoAvailable">
+          <div class="shadow py-4 mr-1 overflow_hide" [ngClass]="{'col-4' : !isVideoClicked , 'col-12' :isVideoClicked }"
+            *ngFor="let video of videoList">
+            <video (click)="onClickVideoInfo(video.id)" controls class="cursor_pointer" (canplay)="pauseVideo(videoplayer)"
+              [ngClass]="{'video_player': !isVideoClicked, 'extended_video_player' : isVideoClicked}" #videoPlayer
+              poster="{{video?.thumbnailUrl}}">
+              <source src="{{video?.videoUrl}}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video> <br>
+            <div class="cursor_pointer p-3" (click)="onClickVideoInfo(video.id)">
+              <b>{{video?.title}} </b> <br>
+              <div class="small fw-light">
+                {{video?.views}} views <br>
+                {{video?.author}} <br>
+                {{video?.subscriber}} <br>
               </div>
             </div>
+            <div class="card py-4 p-3" *ngIf="isVideoClicked">
+              <p>{{video?.description}}</p>
+            </div>
           </div>
-          <div class="row" *ngIf="isSmallVideoAvailable">
-            <div class="col-md-6 mx-auto mb-2 mt-3">
-              <h4 class="text-center title_color"> Recommended For You</h4>
-              <hr>
-            </div>
-            </div>
-          <div class="row cursor_pointer" *ngFor="let video of suggestionList">
 
-            <div class="col-7 p-3">
-              <video (click)="onClickSmallVideoInfo(video)" controls (canplay)="pauseVideo(videoplayer)" class="small_video_player"
-                #videoPlayer poster="{{video?.thumbnailUrl}}">
-                <source src="{{video?.videoUrl}}" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            <div class="col-5 pt-5">
-              <div class="p-2" (click)="onClickSmallVideoInfo(video)">
-                <b>{{video?.title}} </b> <br>
-                <div class="small fw-light">
-                  {{video?.views}} views <br>
-                  {{video?.author}} <br>
-                  {{video?.subscriber}} <br>
-                </div>
-              </div>
-            </div>
 
-          </div>
-          <div class="row" *ngIf="!isSmallVideoAvailable">
-            <div class="col-md-12 no_video_found">
-              <h4 class="text-center m-4">No Video Found !!</h4>
-            </div>
+        </div>
+        <div class="row" *ngIf="!isVideoAvailable">
+          <div class="col-md-12 no_video_found">
+            <h4 class="text-center m-4">No Video Found !!</h4>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="col-4" *ngIf="isVideoClicked">
+    <div class="card">
+
+      <div class="shadow min-vh-100 py-4">
+        <div class="row">
+          <div class="col-md-10 mx-auto mb-2">
+            <div class="input-group">
+              <input class="form-control border-end-0 border rounded-pill" type="search" placeholder="search" id="example-search-input"
+                name="search" [(ngModel)]="search" (input)="onClickSearchBtn('suggestionList')">
+              <span class="input-group-append">
+                <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="button"
+                  (click)="onClickSearchBtn('suggestionList')">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="isSmallVideoAvailable">
+          <div class="col-md-6 mx-auto mb-2 mt-3">
+            <h4 class="text-center title_color"> Recommended For You</h4>
+            <hr>
+          </div>
+        </div>
+        <div class="row cursor_pointer" *ngFor="let video of suggestionList">
+
+          <div class="col-7 p-3">
+            <video (click)="onClickSuggestedVideo(video)" controls (canplay)="pauseVideo(videoplayer)" class="small_video_player"
+              #videoPlayer poster="{{video?.thumbnailUrl}}">
+              <source src="{{video?.videoUrl}}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="col-5 pt-5">
+            <div class="p-2" (click)="onClickSuggestedVideo(video)">
+              <b>{{video?.title}} </b> <br>
+              <div class="small fw-light">
+                {{video?.views}} views <br>
+                {{video?.author}} <br>
+                {{video?.subscriber}} <br>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row" *ngIf="!isSmallVideoAvailable">
+          <div class="col-md-12 no_video_found">
+            <h4 class="text-center m-4">No Video Found !!</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

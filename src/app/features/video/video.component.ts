@@ -18,25 +18,29 @@ export class VideoComponent implements OnInit {
   }
 
   videoList: any;
+  videoListBackUp: any;
   suggestionList: any;
+  suggestionListBackUp : any;
   isVideoAvailable: boolean = true;
   isSmallVideoAvailable: boolean = false;
   isVideoClicked: boolean = false;
   isSmallVideoClicked: boolean = false;
   search : any = '';
-  suggestionListBackUp : any;
+ 
 
   ngOnInit() {
     this.getVideList()
     
   }
 
+  // fetch data from API
   getVideList(){
     this.commonService.getVideoList().subscribe((res: any) => {
       if (res) {
         this.videoList = res;
         this.suggestionList = [...this.videoList];
         this.suggestionListBackUp = [...this.videoList];
+        this.videoListBackUp = [...this.videoList];
         this.isVideoAvailable = true;
         this.isSmallVideoAvailable = true;
       }else{
@@ -45,12 +49,14 @@ export class VideoComponent implements OnInit {
     })
   }
 
+  // Returning to home 
   onClickHomeBtn(){
     this.isVideoClicked = ! this.isVideoClicked;
     this.getVideList()
   }
 
 
+  // video player related
   pauseVideo(videoplayer: any) {
     videoplayer.nativeElement.play();    
     // setTimeout(() => {
@@ -69,9 +75,12 @@ export class VideoComponent implements OnInit {
     this.show = !this.show;
     videoplayer.nativeElement.play();
   }
-  // listName:string = 'videoList'
 
-  onClickSearchBtn(listName:string = 'videoList') {
+  // video player end
+  
+
+  // search functionality
+  onClickSearchBtn(listName:string) {
    
     setTimeout(()=>{
       if (this.search) {
@@ -84,7 +93,7 @@ export class VideoComponent implements OnInit {
         }
       }else{
 
-        this.suggestionList = this.suggestionList.filter((el: any) => el.title.toLowerCase().includes(this.search.toLowerCase()));
+        this.suggestionList = this.suggestionListBackUp.filter((el: any) => el.title.toLowerCase().includes(this.search.toLowerCase()));
         if(this.suggestionList && this.suggestionList.length > 0){
           this.isSmallVideoAvailable = true;
         }else{
@@ -104,14 +113,15 @@ export class VideoComponent implements OnInit {
    
   }
 
+  // Master video click function
   onClickVideoInfo(id:string){
     this.isVideoClicked = true;
     this.isSmallVideoClicked = false;
+    this.generateRandomSuggestionList();
     let index = this.suggestionList.findIndex((el:any)=>el.id==id);
     let masterIndex = this.videoList.findIndex((el:any)=>el.id==id);
     if(index >= 0){
-      this.suggestionList.splice(index,1);
-      // this.videoList = this.videoList.slice(masterIndex,1);
+      this.suggestionList.splice(index,1);     
     }
     if(masterIndex >= 0){    
       this.videoList = this.videoList.slice(masterIndex,masterIndex+1);
@@ -121,23 +131,37 @@ export class VideoComponent implements OnInit {
   }
 
 
-  onClickSmallVideoInfo(data:any){
-    this.isSmallVideoClicked = true;
-    // this.isVideoClicked = false;
 
-    
-    let tempData = data;
-    let index = this.suggestionList.findIndex((el:any)=>el.id==data.id);
-    
+  onClickSuggestedVideo(data:any){
+    this.isSmallVideoClicked = true;  
+    let tempData = data;    
+    let index = this.suggestionList.findIndex((el:any)=>el.id==tempData.id);
+
+    this.generateRandomSuggestionList();    
     if(index >= 0){
       this.suggestionList.splice(index,1,this.videoList[0]);
-      this.suggestionListBackUp.splice(index,1,this.videoList[0]);
-      
+      this.suggestionListBackUp.splice(index,1,this.videoList[0]);      
+    }
+    this.videoList[0] = tempData;  
+    
+  }
+
+  // Generating rando video ass suggestion for user
+  generateRandomSuggestionList(){
+    let randomList : any = [];
+    let totalVideoCount = this.videoListBackUp.length;
+    for(var i = 0; i < 5; i++){
+      let randomIndex = Math.floor(Math.random() * (totalVideoCount-1));
+      randomList.push(randomIndex);
+    }
+    let removeDuplicates : any = [... new Set(randomList)];
+    let len = removeDuplicates.length;
+    this.suggestionList = [];
+    for(var j = 0; j < len; j++){
+      this.suggestionList.push(this.suggestionListBackUp[removeDuplicates[j]]);      
     }
 
-    this.videoList[0] = tempData;
-   
-    
+    return this.suggestionList;
   }
 
  
